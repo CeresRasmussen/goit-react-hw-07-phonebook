@@ -54,6 +54,7 @@ export const InputForm = () => {
     }
     newContact.id = nanoid(5);
     dispatch(addContactThunk(newContact));
+    toast.success(`${newContact.name} was added!`);
     resetForm();
   };
 

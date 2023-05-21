@@ -7,7 +7,9 @@ import { getContacts } from 'redux/contactSlice';
 import css from 'components/Contacts/Contacts.module.css';
 import React from 'react';
 import { Notification } from 'components/Notification/Notification';
-import PropTypes from 'prop-types';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Contacts = ({ children }) => {
   const dispatch = useDispatch();
@@ -21,11 +23,18 @@ export const Contacts = ({ children }) => {
     });
     return list;
   };
-
   const filteredContacts = filteredContactsFunc();
+
+  const contactName = id => {
+    const index = filteredContacts.findIndex(contact => contact.id === id);
+    const nameContact = filteredContacts[index].name;
+    return nameContact;
+  };
 
   const deleteContactsFunc = contactId => {
     dispatch(deleteContactThunk(contactId));
+
+    toast.info(`${contactName(contactId)} was deleted!`);
   };
 
   return (
@@ -67,15 +76,4 @@ export const Contacts = ({ children }) => {
       )}
     </section>
   );
-};
-
-Contacts.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string,
-      number: PropTypes.string,
-    })
-  ),
-  deleteContacts: PropTypes.func,
 };
