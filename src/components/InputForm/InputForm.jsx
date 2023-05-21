@@ -7,7 +7,7 @@ import css from 'components/InputForm/InputForm.module.css';
 import { nanoid } from 'nanoid';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import PropTypes from 'prop-types';
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -105,8 +105,4 @@ export const InputForm = () => {
       </Formik>
     </section>
   );
-};
-
-InputForm.propTypes = {
-  onSubmitForm: PropTypes.func,
 };

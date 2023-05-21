@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import css from 'components/Filter/Filter.module.css';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 export const Filter = () => {
   const filter = useSelector(getFilter);
@@ -26,9 +25,4 @@ export const Filter = () => {
       </label>
     </>
   );
-};
-
-Filter.propTypes = {
-  value: PropTypes.string,
-  onFilterContacts: PropTypes.func,
 };
