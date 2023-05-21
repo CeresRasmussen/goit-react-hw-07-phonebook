@@ -1,17 +1,40 @@
+import { useDispatch, useSelector } from 'react-redux';
+
+import { deleteContactThunk } from 'redux/operation';
+import { getFilter } from 'redux/sliceFilter';
+import { getContacts } from 'redux/contactSlice';
+
 import css from 'components/Contacts/Contacts.module.css';
 import React from 'react';
 import { Notification } from 'components/Notification/Notification';
 import PropTypes from 'prop-types';
 
-export const Contacts = ({ contacts, deleteContacts, children }) => {
-  // console.log('contacts');
+export const Contacts = ({ children }) => {
+  const dispatch = useDispatch();
+  const contactsList = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+  const filteredContactsFunc = () => {
+    const list = contactsList.filter(contact => {
+      const contactWords = contact.name.toLowerCase().split(' ');
+      return contactWords.some(word => word.startsWith(filter.toLowerCase()));
+    });
+    return list;
+  };
+
+  const filteredContacts = filteredContactsFunc();
+
+  const deleteContactsFunc = contactId => {
+    dispatch(deleteContactThunk(contactId));
+  };
+
   return (
     <section>
       <h2 className={css.title}>Contacts</h2>
       {children}
-      {contacts.length > 0 ? (
+      {filteredContacts.length > 0 ? (
         <ul>
-          {contacts.map(({ id, name, number }) => (
+          {filteredContacts.map(({ id, name, number }) => (
             <li key={id} className={css.item}>
               <span className={css.span}>{name} </span>
               <span className={css.span}>{number}</span>
@@ -19,7 +42,7 @@ export const Contacts = ({ contacts, deleteContacts, children }) => {
                 type="button"
                 className={css.close}
                 title="Delete"
-                onClick={() => deleteContacts(id)}
+                onClick={() => deleteContactsFunc(id)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

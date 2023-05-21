@@ -1,8 +1,15 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts } from 'redux/contactSlice';
+
+import { addContactThunk } from 'redux/operation';
+
 import css from 'components/InputForm/InputForm.module.css';
 import { nanoid } from 'nanoid';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialValue = { name: '', number: '' };
 const schema = yup.object().shape({
@@ -32,11 +39,21 @@ const schema = yup.object().shape({
     ),
 });
 
-export const InputForm = ({ onSubmitForm }) => {
-  // console.log('InputForm:');
+export const InputForm = () => {
+  const dispatch = useDispatch();
+  const contactsList = useSelector(getContacts);
   const loginInputId = nanoid(5);
   const handleSubmit = (newContact, { resetForm }) => {
-    onSubmitForm(newContact);
+    if (
+      contactsList.some(contact => {
+        return contact.name === newContact.name;
+      })
+    ) {
+      toast.error(`${newContact.name} is alredy in Phonebook `);
+      return;
+    }
+    newContact.id = nanoid(5);
+    dispatch(addContactThunk(newContact));
     resetForm();
   };
 
