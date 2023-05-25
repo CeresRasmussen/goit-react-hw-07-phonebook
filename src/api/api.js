@@ -11,12 +11,15 @@ const fetchContacts = (query = false) => {
 };
 
 const addContact = contact => {
-  const request = HTTPClient.post('/contacts', contact);
-  return request;
+  return HTTPClient.post('/contacts', contact);
 };
 
 const deleteContactsById = contactId => {
   return HTTPClient.delete(`/contacts/${contactId}`).catch(e => console.log(e));
 };
-
-export { fetchContacts, addContact, deleteContactsById };
+const editContactsById = ({ id, name, number }) => {
+  return HTTPClient.put(`/contacts/${id}`, { id, name, number }).catch(e =>
+    console.log(e)
+  );
+};
+export { fetchContacts, addContact, deleteContactsById, editContactsById };

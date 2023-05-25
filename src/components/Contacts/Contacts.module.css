@@ -17,7 +17,7 @@ ul {
   border-radius: 8px;
   display: grid;
   align-items: center;
-  grid-template-columns: 180px 180px 30px;
+  grid-template-columns: 170px 170px 30px 30px;
   grid-auto-flow: dense;
   padding: 5px 15px;
   font-size: 16px;
@@ -65,5 +65,25 @@ label {
 }
 
 .close:active {
+  transform: translateY(2px);
+}
+.edit {
+  padding: 5px;
+  height: 24px;
+  width: 24px;
+  background-color: transparent;
+  display: flex;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border-radius: 50%;
+}
+.edit:hover .icon,
+.edit:active .icon {
+  fill: rgb(0, 110, 255);
+}
+
+.edit:active {
   transform: translateY(2px);
 }

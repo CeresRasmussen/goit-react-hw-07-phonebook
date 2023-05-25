@@ -78,7 +78,7 @@ export const InputForm = () => {
             <ErrorMessage name="name" component="div" />
           </label>
 
-          <label htmlFor={loginInputId} className={css['sub-title']}>
+          <label className={css['sub-title']}>
             Number
             <Field
               type="tel"
